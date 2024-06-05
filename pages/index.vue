@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 const formData = ref({
-  url: "https://one.one.one.one/",
+  url: "",
   thread: 20,
+  confirm1: false,
+  confirm2: false,
 });
 
 let threadQueue: NodeJS.Timeout[] = [];
@@ -51,24 +53,77 @@ const endBench = () => {
 </script>
 
 <template>
-  <ACard class="w-96 m-auto">
-    <AForm :model="formData" class="mt-4">
-      <AFormItem label="URL" field="url">
-        <AInput v-model:model-value="formData.url"></AInput>
+  <ACard class="w-96 m-auto select-none">
+    <AForm
+      :model="formData"
+      ref="formRef"
+      layout="vertical"
+      @submit-success="startBench"
+    >
+      <AFormItem
+        field="url"
+        label="URL"
+        :rules="[
+          { required: true, message: '请输入 URL' },
+          {
+            match: /^(?!.*gov).*$/,
+            message: '检测到违规 URL',
+          },
+          {
+            match: /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+            message: '检测到无效 URL',
+          },
+        ]"
+        :validate-trigger="['blur', 'change', 'input', 'focus']"
+      >
+        <AInput
+          v-model:model-value="formData.url"
+          placeholder="https://one.one.one.one/"
+        ></AInput>
       </AFormItem>
-      <AFormItem label="并发" field="thread">
+      <AFormItem
+        field="thread"
+        label="并发"
+        :rules="[{ required: true, message: '请输入并发数' }]"
+      >
         <AInputNumber v-model:model-value="formData.thread"></AInputNumber>
       </AFormItem>
-      <AFormItem>
-        <div class="flex justify-end gap-2 w-full">
-          <AButton type="primary" @click="startBench()">开始</AButton>
+      <AFormItem
+        field="confirm1"
+        class="!mb-0"
+        :rules="[{ type: 'boolean', true: true, message: '请阅读并勾选' }]"
+        hide-label
+      >
+        <ACheckbox v-model="formData.confirm1">
+          我确认以上 URL 仅用于测试
+        </ACheckbox>
+      </AFormItem>
+      <AFormItem
+        field="confirm2"
+        class="!mb-0"
+        :rules="[{ type: 'boolean', true: true, message: '请阅读并勾选' }]"
+        hide-label
+      >
+        <ACheckbox v-model="formData.confirm2">
+          对其造成的一切后果，本人承担所有责任
+        </ACheckbox>
+      </AFormItem>
+      <AFormItem hide-label class="mt-4">
+        <div class="flex gap-2">
+          <AButton type="primary" html-type="submit">开始</AButton>
           <AButton type="primary" @click="endBench()">停止</AButton>
         </div>
       </AFormItem>
       <ADescriptions :column="1" bordered>
-        <ADescriptionsItem label="累计请求总数">{{ count }}</ADescriptionsItem>
-        <ADescriptionsItem label="请求速率">{{ qps }}</ADescriptionsItem>
-        <ADescriptionsItem label="累计用时">{{ countTime }}</ADescriptionsItem>
+        <ADescriptionsItem label="累计请求总数">
+          {{ count }} 次
+        </ADescriptionsItem>
+        <ADescriptionsItem label="请求速率">
+          {{ qps.toFixed(0) }} 次/秒
+        </ADescriptionsItem>
+        <ADescriptionsItem label="累计用时">
+          {{ countTime / 1000 }} 秒
+        </ADescriptionsItem>
       </ADescriptions>
     </AForm>
   </ACard>
