@@ -25,6 +25,7 @@ watch(count, () => {
 
 const startBench = () => {
   startTime = Date.now();
+  count.value = 0;
   for (let i = 0; i < formData.value.thread; i++) {
     threadQueue[i] = setInterval(() => {
       count.value++;
