@@ -245,3 +245,7 @@ html[class="dark-mode"] body {
   --color-menu-dark-hover: var(--color-fill-2);
   --color-mask-bg: rgba(23, 23, 26, 0.6);
 }
+
+.arco-tooltip-content {
+  padding: 12px !important;
+}

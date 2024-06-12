@@ -8,7 +8,7 @@ const toggleColorMode = () => {
 
 <template>
   <ALayoutHeader class="h-64 flex justify-center items-center">
-    <img src="/public/images/logo.svg" class="h-48" />
+    <NuxtImg src="/images/logo.svg" class="h-48"></NuxtImg>
   </ALayoutHeader>
   <ALayoutContent>
     <slot></slot>
@@ -36,6 +36,7 @@ const toggleColorMode = () => {
         <ATooltip>
           <Icon name="tabler:brand-wechat" />
           <template #content>
+            <NuxtImg format="webp" src="/images/wechat.png"></NuxtImg>
           </template>
         </ATooltip>
       </div>
