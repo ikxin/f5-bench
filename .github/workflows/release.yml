@@ -1,0 +1,36 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Generate
+        run: |
+          bun run generate
+          cd .output/public
+          zip -q -r ../../f5-bench-${GITHUB_REF#refs/tags/}.zip .
+          cd ../../ && ls
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: f5-bench-v*.zip
