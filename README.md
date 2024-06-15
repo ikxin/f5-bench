@@ -63,7 +63,7 @@
 
 ## ⭐ 星星
 
-<img src="https://starchart.cc/ikxin/f5-bench.svg" />
+![](https://starchart.cc/ikxin/f5-bench.svg?variant=light)
 
 ## 🧑‍💻 作者
 
