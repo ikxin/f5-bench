@@ -71,7 +71,8 @@ const endBench = () => {
             message: '检测到违规 URL',
           },
           {
-            match: /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+            match:
+              /^(https?:\/\/)?((([a-zA-Z\d-]+)\.([a-zA-Z\d.-]+))|((\d{1,3}\.){3}\d{1,3})|localhost)(:\d+)?(\/[\w .-]*)*\/?$/,
             message: '检测到无效 URL',
           },
         ]"
