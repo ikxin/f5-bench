@@ -4,11 +4,11 @@ export default defineNuxtConfig({
   css: ["assets/css/style.css"],
   modules: [
     "@nuxt/eslint",
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/i18n",
+    "@nuxt/icon",
     "@nuxtjs/color-mode",
+    "@nuxtjs/i18n",
+    "@nuxtjs/tailwindcss",
     "arco-design-nuxt-module",
-    "nuxt-icon",
   ],
   routeRules: {
     "/": { prerender: true },

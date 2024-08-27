@@ -6,9 +6,9 @@ const formData = ref({
   confirm2: false,
 });
 
-let threadQueue: NodeJS.Timeout[] = [];
+const threadQueue: NodeJS.Timeout[] = [];
 
-let controllerQueue: AbortController[] = [];
+const controllerQueue: AbortController[] = [];
 
 const count = ref(0);
 
@@ -56,8 +56,8 @@ const endBench = () => {
 <template>
   <ACard class="w-96 m-auto select-none">
     <AForm
-      :model="formData"
       ref="formRef"
+      :model="formData"
       layout="vertical"
       @submit-success="startBench"
     >
@@ -71,8 +71,7 @@ const endBench = () => {
             message: '检测到违规 URL',
           },
           {
-            match:
-              /^(https?:\/\/)?((([a-zA-Z\d-]+)\.([a-zA-Z\d.-]+))|((\d{1,3}\.){3}\d{1,3})|localhost)(:\d+)?(\/[\w .-]*)*\/?$/,
+            type: 'url',
             message: '检测到无效 URL',
           },
         ]"
@@ -81,14 +80,14 @@ const endBench = () => {
         <AInput
           v-model:model-value="formData.url"
           placeholder="https://www.cloudflare.com/"
-        ></AInput>
+        />
       </AFormItem>
       <AFormItem
         field="thread"
         label="并发"
         :rules="[{ required: true, message: '请输入并发数' }]"
       >
-        <AInputNumber v-model:model-value="formData.thread"></AInputNumber>
+        <AInputNumber v-model:model-value="formData.thread" />
       </AFormItem>
       <AFormItem
         field="confirm1"
