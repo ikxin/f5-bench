@@ -28,7 +28,7 @@ const toggleColorMode = () => {
         </NuxtLink>
       </div>
       <div class="cursor-pointer">
-        <NuxtLink to="https://x.com/ikxinstudio" target="_blank">
+        <NuxtLink to="https://x.com/wyikxin" target="_blank">
           <Icon name="tabler:brand-twitter" />
         </NuxtLink>
       </div>
