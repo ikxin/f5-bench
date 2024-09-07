@@ -28,36 +28,13 @@
 
 基于 Fetch API 发起的网络请求，会携带本机设备的 IP 信息，因此请勿将本工具用于任何非法用途，本项目仅限于开发者用于对自己的网站发起请求基准测试，除此之外的一切使用场景，使用者本人需承担所有责任，本项目不对任何使用场景负责。
 
-## 👀 在线预览
+## 👀 在线演示
 
-以下是本项目在线预览所用的托管平台，禁止使用其进行非法请求基准测试，托管平台会对使用者以及使用记录进行日志文件留存（仅用于规避责任风险）。
+本项目使用 Cloudflare Pages 进行部署在线演示，禁止使用其进行非法请求基准测试，托管平台会对使用者以及使用记录进行日志文件留存（仅用于规避责任风险）。
 
-| Hosting          | Url Address                   | Region |
-| ---------------- | ----------------------------- | ------ |
-| Zeabur           | https://f5-bench.zeabur.app/  | HKG    |
-| Netlify          | https://f5-bench.netlify.app/ | SGP    |
-| Cloudflare Pages | https://f5-bench.pages.dev/   | USA    |
-| Vercel           | https://f5-bench.vercel.app/  | USA    |
+https://f5-bench.ikxin.com
 
-## 📦 部署
-
-### Zeabur
-
-<!-- TODO -->
-
-### Netlify
-
-<!-- TODO -->
-
-### Cloudflare Pages
-
-<!-- TODO -->
-
-### Vercel
-
-<!-- TODO -->
-
-### 自行部署
+## 📦 自行部署
 
 在本项目 [Release](https://github.com/ikxin/f5-bench/releases) 页面下载最新版本的压缩包，将其上传到任意静态网站主机中，然后解压到网站根目录即可。
 
