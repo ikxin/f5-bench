@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ["assets/css/style.css"],
+  compatibilityDate: "2025-02-11",
+  css: ["~/assets/css/style.css"],
+  future: {
+    compatibilityVersion: 4,
+  },
   modules: [
     "@nuxt/eslint",
     "@nuxt/icon",
@@ -10,7 +14,4 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "arco-design-nuxt-module",
   ],
-  routeRules: {
-    "/": { prerender: true },
-  },
 });
