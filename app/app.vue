@@ -20,21 +20,8 @@ useHead({
   script: [
     {
       defer: "",
-      src: "https://analytics.ikxin.com/script.js",
+      src: "https://umami.ikxin.com/script.js",
       "data-website-id": "d44b9f30-2706-4e02-b971-0187a72b093f",
-    },
-    {
-      async: "",
-      src: "https://www.googletagmanager.com/gtag/js?id=G-ZYNHJ13WVL",
-    },
-    {
-      key: "google",
-      innerHTML: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-ZYNHJ13WVL');
-      `,
     },
   ],
 });
