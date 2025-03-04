@@ -7,10 +7,8 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   modules: [
-    "@nuxt/eslint",
     "@nuxt/icon",
     "@nuxtjs/color-mode",
-    "@nuxtjs/i18n",
     "@nuxtjs/tailwindcss",
     "arco-design-nuxt-module",
   ],
