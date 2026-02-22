@@ -1,131 +1,148 @@
 "use client";
 
-import { Button, Card, Form } from "@douyinfe/semi-ui-19";
-import { useCallback, useEffect, useRef, useState } from "react";
+import * as z from "zod";
+import { Button, Card, Form, Toast } from "@douyinfe/semi-ui-19";
+import { useEffect, useRef, useState } from "react";
+
+const formSchema = z.object({
+  url: z
+    .url({ message: "检测到无效 URL" })
+    .refine((value) => !/gov/i.test(value), {
+      message: "检测到违规 URL（包含 gov 关键词）",
+    }),
+  thread: z
+    .number()
+    .int({ message: "并发数必须为整数" })
+    .positive({ message: "并发数必须大于 0" }),
+  confirm1: z.any().refine((value) => value === true, {
+    message: "请确认 URL 仅用于测试",
+  }),
+  confirm2: z.any().refine((value) => value === true, {
+    message: "请确认承担所有责任",
+  }),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 export default function Page() {
-  const [url, setUrl] = useState("");
-  const [thread, setThread] = useState<number>(20);
-  const [confirm1, setConfirm1] = useState(false);
-  const [confirm2, setConfirm2] = useState(false);
+  const formApiRef = useRef<any>(null);
+  const timerRef = useRef<NodeJS.Timeout[]>([]);
+  const ctrlRef = useRef<AbortController[]>([]);
+  const startAtRef = useRef(0);
 
   const [count, setCount] = useState(0);
   const [qps, setQps] = useState(0);
-  const [countTime, setCountTime] = useState(0);
-  const [running, setRunning] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [elapsedMs, setElapsedMs] = useState(0);
 
-  const threadQueueRef = useRef<number[]>([]);
-  const controllerQueueRef = useRef<AbortController[]>([]);
-  const startTimeRef = useRef(0);
+  const getFormApi = (formApi: any) => {
+    formApiRef.current = formApi;
+  };
 
-  const endBench = useCallback(() => {
-    threadQueueRef.current.forEach((timerId) => {
-      window.clearInterval(timerId);
-    });
-    threadQueueRef.current = [];
+  const stopBench = () => {
+    timerRef.current.forEach((timer) => clearInterval(timer));
+    timerRef.current = [];
 
-    controllerQueueRef.current.forEach((controller) => {
-      controller.abort();
-    });
-    controllerQueueRef.current = [];
-    setRunning(false);
-  }, []);
+    ctrlRef.current.forEach((ctrl) => ctrl.abort());
+    ctrlRef.current = [];
+  };
 
-  useEffect(() => {
-    if (startTimeRef.current === 0) {
-      return;
-    }
-
-    const elapsed = Date.now() - startTimeRef.current;
-    setCountTime(elapsed);
-    setQps(elapsed > 0 ? (count / elapsed) * 1000 : 0);
-  }, [count]);
-
-  useEffect(() => {
-    return () => {
-      endBench();
-    };
-  }, [endBench]);
-
-  const startBench = () => {
-    const trimmedUrl = url.trim();
-
-    if (!trimmedUrl) {
-      setError("请输入 URL");
-      return;
-    }
-
-    if (/gov/i.test(trimmedUrl)) {
-      setError("检测到违规 URL");
-      return;
-    }
-
-    try {
-      new URL(trimmedUrl);
-    } catch {
-      setError("检测到无效 URL");
-      return;
-    }
-
-    if (!confirm1 || !confirm2) {
-      setError("请阅读并勾选确认项");
-      return;
-    }
-
-    if (!Number.isFinite(thread) || thread <= 0) {
-      setError("请输入并发数");
-      return;
-    }
-
-    endBench();
-    setError(null);
+  const startBench = (values: FormValues) => {
+    stopBench();
+    startAtRef.current = Date.now();
     setCount(0);
     setQps(0);
-    setCountTime(0);
-    startTimeRef.current = Date.now();
-    setRunning(true);
+    setElapsedMs(0);
 
-    for (let i = 0; i < thread; i++) {
-      const timerId = window.setInterval(() => {
-        setCount((previous) => previous + 1);
-        const controller = new AbortController();
-        controllerQueueRef.current.push(controller);
-
-        fetch(trimmedUrl, {
+    for (let i = 0; i < values.thread; i++) {
+      const timer = setInterval(() => {
+        setCount((prev) => prev + 1);
+        const ctrl = new AbortController();
+        ctrlRef.current.push(ctrl);
+        fetch(values.url, {
           method: "GET",
           mode: "no-cors",
-          signal: controller.signal,
+          signal: ctrl.signal,
         }).catch(() => {});
       }, 10);
-
-      threadQueueRef.current.push(timerId);
+      timerRef.current.push(timer);
     }
   };
 
+  const submit = (values?: FormValues) => {
+    const currentValues =
+      values ?? (formApiRef.current?.getValues() as FormValues | undefined);
+
+    if (!currentValues) {
+      return;
+    }
+
+    if (formApiRef.current) {
+      const { errors } = formApiRef.current.getFormState();
+      Object.keys(errors || {}).forEach((field) => {
+        formApiRef.current.setError(field, "");
+      });
+    }
+
+    const result = formSchema.safeParse(currentValues);
+
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as string;
+        const message = issue.message;
+
+        if (formApiRef.current) {
+          formApiRef.current.setError(field, message);
+        }
+      });
+
+      Toast.error(result.error.issues[0].message);
+      return;
+    }
+
+    startBench(result.data);
+    Toast.success("已开始");
+  };
+
+  useEffect(() => {
+    if (!startAtRef.current) {
+      return;
+    }
+    const ms = Date.now() - startAtRef.current;
+    setElapsedMs(ms);
+    setQps(ms > 0 ? (count / ms) * 1000 : 0);
+  }, [count]);
+
+  useEffect(() => () => stopBench(), []);
+
   return (
     <Card>
-      <Form>
+      <Form getFormApi={getFormApi}>
         <Form.Input
           field="url"
           label={{ text: "URL", required: true }}
-        ></Form.Input>
+          placeholder="https://www.cloudflare.com"
+        />
         <Form.InputNumber
           field="thread"
-          label={{ text: "并发数", required: true }}
+          label={{ text: "并发", required: true }}
+          initValue={20}
           className="w-full"
-        ></Form.InputNumber>
-        <Form.Checkbox field="agree" noLabel>
+        />
+        <Form.Checkbox field="confirm1" noLabel>
           我确认以上 URL 仅用于测试
         </Form.Checkbox>
-        <Form.Checkbox field="agree2" noLabel>
+        <Form.Checkbox field="confirm2" noLabel>
           对其造成的一切后果，本人承担所有责任
         </Form.Checkbox>
+        <div className="flex gap-4 py-3">
+          <Button block type="primary" onClick={() => submit()}>
+            开始
+          </Button>
+          <Button block type="danger" onClick={stopBench}>
+            停止
+          </Button>
+        </div>
       </Form>
-      <div className="flex gap-4 py-3">
-        <Button block>开始</Button>
-        <Button block>停止</Button>
-      </div>
       <div className="my-3 grid grid-cols-[auto_1fr] overflow-hidden rounded-(--semi-border-radius-small) border border-(--semi-color-border)">
         <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5">
           累计请求总数
@@ -133,19 +150,17 @@ export default function Page() {
         <div className="border-b border-(--semi-color-border) px-4 py-1.5">
           {count} 次
         </div>
-
         <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5">
           请求速率
         </div>
         <div className="border-b border-(--semi-color-border) px-4 py-1.5">
           {qps.toFixed(0)} 次/秒
         </div>
-
         <div className="border-r border-(--semi-color-border) px-4 py-1.5">
           累计用时
         </div>
         <div className="border-(--semi-color-border) px-4 py-1.5">
-          {(countTime / 1000).toFixed(2)} 秒
+          {(elapsedMs / 1000).toFixed(1)} 秒
         </div>
       </div>
     </Card>
