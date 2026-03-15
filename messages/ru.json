@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - Инструмент бенчмарка Fetch для сайтов",
+    "description": "F5 Bench — инструмент для бенчмаркинга производительности Fetch веб-сайтов, помогающий разработчикам оценивать и оптимизировать производительность загрузки.",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, Тест производительности, Тест сайта"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "Пожалуйста, введите URL",
+    "urlInvalid": "Обнаружен недопустимый URL",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "Параллелизм",
+    "agree": "Я подтверждаю, что несу ответственность за все последствия",
+    "agreeRequired": "Пожалуйста, примите условия",
+    "start": "Старт",
+    "stop": "Стоп"
+  },
+  "stats": {
+    "totalRequests": "Всего запросов",
+    "requestSpeed": "Скорость запросов",
+    "totalTime": "Общее время",
+    "timesUnit": "раз",
+    "speedUnit": "зап/с",
+    "secondsUnit": "с"
+  },
+  "theme": {
+    "switchToLight": "Переключить на светлую тему",
+    "switchToDark": "Переключить на тёмную тему"
+  }
+}

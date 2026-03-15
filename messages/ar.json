@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - أداة اختبار أداء Fetch للمواقع",
+    "description": "F5 Bench هي أداة لاختبار أداء Fetch للمواقع الإلكترونية، تساعد المطورين على تقييم وتحسين أداء تحميل المواقع.",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, اختبار الأداء, اختبار الموقع"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "يرجى إدخال عنوان URL",
+    "urlInvalid": "تم اكتشاف عنوان URL غير صالح",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "التزامن",
+    "agree": "أؤكد أنني مسؤول عن جميع العواقب",
+    "agreeRequired": "يرجى الموافقة على الشروط",
+    "start": "بدء",
+    "stop": "إيقاف"
+  },
+  "stats": {
+    "totalRequests": "إجمالي الطلبات",
+    "requestSpeed": "سرعة الطلبات",
+    "totalTime": "الوقت الإجمالي",
+    "timesUnit": "مرة",
+    "speedUnit": "طلب/ث",
+    "secondsUnit": "ث"
+  },
+  "theme": {
+    "switchToLight": "التبديل إلى الوضع الفاتح",
+    "switchToDark": "التبديل إلى الوضع الداكن"
+  }
+}

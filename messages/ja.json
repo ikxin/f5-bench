@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - ウェブサイト Fetch ベンチマークツール",
+    "description": "F5 Bench はウェブサイトの Fetch パフォーマンスベンチマーク用ツールで、開発者がウェブサイトの読み込みパフォーマンスを評価・最適化するのに役立ちます。",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, ベンチマーク, ウェブサイトテスト"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "URLを入力してください",
+    "urlInvalid": "不正なURLが検出されました",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "同時接続数",
+    "agree": "すべての結果に対して責任を負うことを確認します",
+    "agreeRequired": "利用規約に同意してください",
+    "start": "開始",
+    "stop": "停止"
+  },
+  "stats": {
+    "totalRequests": "リクエスト総数",
+    "requestSpeed": "リクエスト速度",
+    "totalTime": "合計時間",
+    "timesUnit": "回",
+    "speedUnit": "回/秒",
+    "secondsUnit": "秒"
+  },
+  "theme": {
+    "switchToLight": "ライトモードに切り替え",
+    "switchToDark": "ダークモードに切り替え"
+  }
+}

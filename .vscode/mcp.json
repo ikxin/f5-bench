@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "semi-mcp": {
+      "command": "npx",
+      "args": ["-y", "@douyinfe/semi-mcp"]
+    },
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"]
+    }
+  }
+}

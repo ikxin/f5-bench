@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - 网站 Fetch 基准测试工具",
+    "description": "F5 Bench 是一个专门用于网站 Fetch 性能基准测试的工具，帮助开发者评估和优化网站的加载性能，助力提升网站的用户体验和速度，适用于需要精准了解网站性能的开发人员和测试人员。",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, 基准测试, 网站测试"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "请输入 URL",
+    "urlInvalid": "检测到违规 URL",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "并发",
+    "agree": "本人确认对其造成的一切后果负责",
+    "agreeRequired": "请同意相关条款",
+    "start": "开始",
+    "stop": "停止"
+  },
+  "stats": {
+    "totalRequests": "请求总数",
+    "requestSpeed": "请求速率",
+    "totalTime": "累计用时",
+    "timesUnit": "次",
+    "speedUnit": "次/秒",
+    "secondsUnit": "秒"
+  },
+  "theme": {
+    "switchToLight": "切换到浅色模式",
+    "switchToDark": "切换到深色模式"
+  }
+}

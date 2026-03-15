@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - Ferramenta de Benchmark Fetch para sites",
+    "description": "F5 Bench é uma ferramenta de benchmark de desempenho Fetch para sites, ajudando desenvolvedores a avaliar e otimizar o desempenho de carregamento.",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, Teste de desempenho, Teste de site"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "Por favor insira uma URL",
+    "urlInvalid": "URL inválida detectada",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "Concorrência",
+    "agree": "Confirmo que sou responsável por todas as consequências",
+    "agreeRequired": "Por favor aceite os termos",
+    "start": "Iniciar",
+    "stop": "Parar"
+  },
+  "stats": {
+    "totalRequests": "Total de requisições",
+    "requestSpeed": "Velocidade de requisições",
+    "totalTime": "Tempo total",
+    "timesUnit": "vezes",
+    "speedUnit": "req/s",
+    "secondsUnit": "s"
+  },
+  "theme": {
+    "switchToLight": "Mudar para modo claro",
+    "switchToDark": "Mudar para modo escuro"
+  }
+}

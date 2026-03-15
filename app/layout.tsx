@@ -1,36 +1,37 @@
-"use client";
-
-import { Layout, Button } from "@douyinfe/semi-ui-19";
+import "@douyinfe/semi-ui/react19-adapter";
+import Script from "next/script";
 import "./app.css";
 
-export default function App({ children }: { children: React.ReactNode }) {
-  const { Header, Footer, Content } = Layout;
-
-  const switchMode = () => {
-    const body = document.body;
-    if (body.hasAttribute("theme-mode")) {
-      body.removeAttribute("theme-mode");
-    } else {
-      body.setAttribute("theme-mode", "dark");
+const themeInitScript = `
+(function () {
+  try {
+    var t = localStorage.getItem("semi-theme-mode");
+    if (
+      t === "dark" ||
+      (t !== "light" &&
+        window.matchMedia("(prefers-color-scheme:dark)").matches)
+    ) {
+      document.body.setAttribute("theme-mode", "dark");
     }
-  };
+  } catch (e) {}
+})()
+`;
 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body>
-        <Layout>
-          <Header className="flex h-64 items-center justify-center">
-            <img src="/images/logo.svg" className="h-48" />
-          </Header>
-          <Content className="flex items-center justify-center px-4">
-            {children}
-          </Content>
-          <Footer className="flex h-48 items-center justify-center">
-            <div className="flex items-center gap-2 text-xl">
-              <Button onClick={switchMode}>Switch Mode</Button>
-            </div>
-          </Footer>
-        </Layout>
+    <html suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {children}
+        <Script
+          defer
+          src="https://umami.ikxin.com/script.js"
+          data-website-id="d44b9f30-2706-4e02-b971-0187a72b093f"
+        />
       </body>
     </html>
   );

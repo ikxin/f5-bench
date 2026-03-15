@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "F5 Bench - 웹사이트 Fetch 벤치마크 도구",
+    "description": "F5 Bench는 웹사이트 Fetch 성능 벤치마크 도구로, 개발자가 웹사이트 로딩 성능을 평가하고 최적화하는 데 도움을 줍니다.",
+    "keywords": "F5-Bench, Fetch, Bench, Benchmark, 벤치마크, 웹사이트 테스트"
+  },
+  "form": {
+    "urlLabel": "URL",
+    "urlRequired": "URL을 입력하세요",
+    "urlInvalid": "잘못된 URL이 감지되었습니다",
+    "urlPlaceholder": "https://example.com",
+    "threadLabel": "동시 접속",
+    "agree": "본인은 모든 결과에 대해 책임을 지겠습니다",
+    "agreeRequired": "약관에 동의해 주세요",
+    "start": "시작",
+    "stop": "중지"
+  },
+  "stats": {
+    "totalRequests": "총 요청 수",
+    "requestSpeed": "요청 속도",
+    "totalTime": "총 소요 시간",
+    "timesUnit": "회",
+    "speedUnit": "회/초",
+    "secondsUnit": "초"
+  },
+  "theme": {
+    "switchToLight": "라이트 모드로 전환",
+    "switchToDark": "다크 모드로 전환"
+  }
+}
