@@ -9,7 +9,7 @@
   <a href="https://github.com/ikxin/f5-bench/commits"><img src="https://badgen.net/github/commits/ikxin/f5-bench" /></a>
   <a href="https://github.com/ikxin/f5-bench/issues"><img src="https://badgen.net/github/issues/ikxin/f5-bench" /></a>
   <a href="https://github.com/ikxin/f5-bench/watchers"><img src="https://badgen.net/github/watchers/ikxin/f5-bench" /></a>
-  <a href="https://github.com/ikxin/f5-bench/blob/master/LICENSE"><img src="https://badgen.net/github/license/ikxin/f5-bench" /></a>
+  <a href="https://github.com/ikxin/f5-bench/blob/main/LICENSE"><img src="https://badgen.net/github/license/ikxin/f5-bench" /></a>
 </p>
 
 ## 📖 项目介绍
@@ -24,6 +24,27 @@
 
 得益于 [Fetch API](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API) 拥有 [`no-cors` 模式](https://developer.mozilla.org/zh-CN/docs/Web/API/fetch#mode)，因此本项目可以绕过 [CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS) 限制，直接对目标网站发起跨域请求，从而实现请求基准测试。
 
+## ✨ 功能特性
+
+- 🚀 基于 [Next.js](https://nextjs.org/) 构建，静态导出，可部署到任意静态托管平台
+- 🎨 使用 [Semi Design](https://semi.design/) 组件库 + [Tailwind CSS](https://tailwindcss.com/) 构建 UI
+- 🌍 支持 11 种语言的国际化（简体中文、繁体中文、English、日本語、한국어、Français、Deutsch、Español、Português、Русский、العربية）
+- 🌙 支持亮色/暗色主题切换
+- 🔧 可配置并发线程数
+- 📊 实时显示请求统计（总请求数、请求速度、总耗时）
+
+## 🛠️ 技术栈
+
+| 技术                                          | 说明                         |
+| --------------------------------------------- | ---------------------------- |
+| [Next.js](https://nextjs.org/)                | React 全栈框架               |
+| [React](https://react.dev/)                   | UI 构建库                    |
+| [TypeScript](https://www.typescriptlang.org/) | 类型安全的 JavaScript        |
+| [Tailwind CSS](https://tailwindcss.com/)      | 原子化 CSS 框架              |
+| [Semi Design](https://semi.design/)           | 企业级 UI 组件库             |
+| [next-intl](https://next-intl.dev/)           | Next.js 国际化方案           |
+| [pnpm](https://pnpm.io/)                      | 快速、节省磁盘空间的包管理器 |
+
 ## 📝 免责声明
 
 基于 Fetch API 发起的网络请求，会携带本机设备的 IP 信息，因此请勿将本工具用于任何非法用途，本项目仅限于开发者用于对自己的网站发起请求基准测试，除此之外的一切使用场景，使用者本人需承担所有责任，本项目不对任何使用场景负责。
@@ -34,9 +55,32 @@
 
 https://f5-bench.ikxin.com
 
-## 📦 自行部署
+## 📦 部署方式
+
+### 静态文件部署
 
 在本项目 [Release](https://github.com/ikxin/f5-bench/releases) 页面下载最新版本的压缩包，将其上传到任意静态网站主机中，然后解压到网站根目录即可。
+
+### 本地开发
+
+```bash
+# 克隆项目
+git clone https://github.com/ikxin/f5-bench.git
+cd f5-bench
+
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+
+# 构建生产版本
+pnpm build
+```
+
+## 🤝 参与贡献
+
+欢迎参与项目贡献！请阅读 [贡献指南](./CONTRIBUTING.md) 了解详情。
 
 ## ⭐ 星星
 
