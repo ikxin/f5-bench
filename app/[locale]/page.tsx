@@ -53,6 +53,10 @@ export default function Page() {
     setRequestSpeed((requestCount / ms) * 1000);
   }, [requestCount]);
 
+  const requestSpeedFormatted = requestSpeed.toFixed(0);
+  const timeTotalSeconds = timeTotal / 1000;
+  const timeTotalKey = Math.floor(timeTotalSeconds);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -106,9 +110,9 @@ export default function Page() {
             {t("stats.totalRequests")}
           </div>
           <div className="border-b border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence mode="popLayout" initial={false}>
+            <AnimatePresence initial={false}>
               <motion.span
-                key={`request-count-${requestCount}`}
+                key={requestCount}
                 className="inline-block"
                 initial={{ opacity: 0, y: 8, filter: "blur(1.5px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -124,16 +128,16 @@ export default function Page() {
             {t("stats.requestSpeed")}
           </div>
           <div className="border-b border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence mode="popLayout" initial={false}>
+            <AnimatePresence initial={false}>
               <motion.span
-                key={`request-speed-${requestSpeed.toFixed(0)}`}
+                key={requestSpeedFormatted}
                 className="inline-block"
                 initial={{ opacity: 0, y: 8, filter: "blur(1.5px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
               >
-                {requestSpeed.toFixed(0)}
+                {requestSpeedFormatted}
               </motion.span>
             </AnimatePresence>{" "}
             {t("stats.speedUnit")}
@@ -142,16 +146,16 @@ export default function Page() {
             {t("stats.totalTime")}
           </div>
           <div className="border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence mode="popLayout" initial={false}>
+            <AnimatePresence initial={false}>
               <motion.span
-                key={`time-total-${timeTotal / 1000}`}
+                key={timeTotalKey}
                 className="inline-block"
                 initial={{ opacity: 0, y: 8, filter: "blur(1.5px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
               >
-                {timeTotal / 1000}
+                {timeTotalSeconds}
               </motion.span>
             </AnimatePresence>{" "}
             {t("stats.secondsUnit")}
