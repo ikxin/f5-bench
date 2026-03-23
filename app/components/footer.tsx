@@ -63,6 +63,7 @@ export function FooterLinks() {
         value={currentLocale}
         onChange={switchLocale}
         position="top"
+        dropdownClassName="semi-light-scrollbar"
         triggerRender={() => (
           <Button
             type="tertiary"

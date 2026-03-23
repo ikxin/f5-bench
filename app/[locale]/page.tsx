@@ -5,24 +5,65 @@ import { useTranslations } from "next-intl";
 import { Button, Card, Form } from "@douyinfe/semi-ui";
 import { AnimatePresence, motion } from "motion/react";
 
+type InitValues = {
+  url: string;
+  thread: number;
+  agree: boolean;
+};
+
+const initValues: InitValues = {
+  url: "https://example.com",
+  thread: 1,
+  agree: false,
+};
+
 export default function Page() {
   const t = useTranslations();
-
-  const initValues = {
-    url: "https://example.com",
-    thread: 1,
-    agree: false,
-  };
 
   const threadQueue = useRef<NodeJS.Timeout[]>([]);
   const controllerQueue = useRef<AbortController[]>([]);
   const startAt = useRef(0);
+  const displayCountTimer = useRef<NodeJS.Timeout | null>(null);
+  const lastDisplayCountUpdateAt = useRef(0);
+  const latestRequestCount = useRef(0);
 
   const [requestCount, setRequestCount] = useState(0);
-  const [requestSpeed, setRequestSpeed] = useState(0);
-  const [timeTotal, setTimeTotal] = useState(0);
+  const [displayRequestCount, setDisplayRequestCount] = useState(0);
+
+  useEffect(() => {
+    latestRequestCount.current = requestCount;
+
+    const minInterval = 80;
+    const now = Date.now();
+    const elapsed = now - lastDisplayCountUpdateAt.current;
+
+    if (elapsed >= minInterval) {
+      lastDisplayCountUpdateAt.current = now;
+      setDisplayRequestCount(requestCount);
+      return;
+    }
+
+    if (displayCountTimer.current) {
+      return;
+    }
+
+    displayCountTimer.current = setTimeout(() => {
+      displayCountTimer.current = null;
+      lastDisplayCountUpdateAt.current = Date.now();
+      setDisplayRequestCount(latestRequestCount.current);
+    }, minInterval - elapsed);
+  }, [requestCount]);
+
+  useEffect(() => {
+    return () => {
+      if (displayCountTimer.current) {
+        clearTimeout(displayCountTimer.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = (values: typeof initValues) => {
+    handleStop();
     startAt.current = Date.now();
     setRequestCount(0);
     for (let i = 0; i < values.thread; i++) {
@@ -46,13 +87,8 @@ export default function Page() {
     controllerQueue.current.length = 0;
   };
 
-  useEffect(() => {
-    if (!startAt.current) return;
-    const ms = Date.now() - startAt.current;
-    setTimeTotal(ms);
-    setRequestSpeed((requestCount / ms) * 1000);
-  }, [requestCount]);
-
+  const timeTotal = startAt.current ? Date.now() - startAt.current : 0;
+  const requestSpeed = timeTotal ? (requestCount / timeTotal) * 1000 : 0;
   const requestSpeedFormatted = requestSpeed.toFixed(0);
   const timeTotalSeconds = timeTotal / 1000;
   const timeTotalKey = Math.floor(timeTotalSeconds);
@@ -64,36 +100,47 @@ export default function Page() {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <Card className="w-md">
-        <Form initValues={initValues} onSubmit={(values) => handleSubmit(values)}>
-        <Form.Input
-          field="url"
-          label={{ text: t("form.urlLabel"), required: true }}
-          rules={[
-            { required: true, type: "url", message: t("form.urlRequired") },
-            { pattern: /^(?!.*gov).*$/, message: t("form.urlInvalid") },
-          ]}
-          placeholder={t("form.urlPlaceholder")}
-          trigger={["blur", "change"]}
-        />
-        <Form.InputNumber
-          field="thread"
-          label={{ text: t("form.threadLabel"), required: true }}
-          className="w-full"
-        />
-        <Form.Checkbox
-          field="agree"
-          validate={(val) => (val ? "" : t("form.agreeRequired"))}
-          noLabel
+        <Form
+          initValues={initValues}
+          onSubmit={(values) => handleSubmit(values)}
         >
-          {t("form.agree")}
-        </Form.Checkbox>
+          <Form.Input
+            field="url"
+            label={{ text: t("form.urlLabel"), required: true }}
+            rules={[
+              { required: true, type: "url", message: t("form.urlRequired") },
+              { pattern: /^(?!.*gov).*$/, message: t("form.urlInvalid") },
+            ]}
+            placeholder={t("form.urlPlaceholder")}
+            trigger={["blur", "change"]}
+          />
+          <Form.InputNumber
+            field="thread"
+            label={{ text: t("form.threadLabel"), required: true }}
+            className="w-full"
+          />
+          <Form.Checkbox
+            field="agree"
+            validate={(val) => (val ? "" : t("form.agreeRequired"))}
+            noLabel
+          >
+            {t("form.agree")}
+          </Form.Checkbox>
           <div className="flex gap-4 py-3">
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="flex-1">
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex-1"
+            >
               <Button block type="primary" htmlType="submit">
                 {t("form.start")}
               </Button>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="flex-1">
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex-1"
+            >
               <Button block type="danger" onClick={handleStop}>
                 {t("form.stop")}
               </Button>
@@ -106,29 +153,29 @@ export default function Page() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.45, ease: "easeOut" }}
         >
-          <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5">
+          <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
             {t("stats.totalRequests")}
           </div>
-          <div className="border-b border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence initial={false}>
+          <div className="border-b border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.span
-                key={requestCount}
+                key={displayRequestCount}
                 className="inline-block"
-                initial={{ opacity: 0, y: 8, filter: "blur(1.5px)" }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
               >
-                {requestCount}
+                {displayRequestCount}
               </motion.span>
             </AnimatePresence>{" "}
             {t("stats.timesUnit")}
           </div>
-          <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5">
+          <div className="border-r border-b border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
             {t("stats.requestSpeed")}
           </div>
-          <div className="border-b border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence initial={false}>
+          <div className="border-b border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.span
                 key={requestSpeedFormatted}
                 className="inline-block"
@@ -142,11 +189,11 @@ export default function Page() {
             </AnimatePresence>{" "}
             {t("stats.speedUnit")}
           </div>
-          <div className="border-r border-(--semi-color-border) px-4 py-1.5">
+          <div className="border-r border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
             {t("stats.totalTime")}
           </div>
-          <div className="border-(--semi-color-border) px-4 py-1.5">
-            <AnimatePresence initial={false}>
+          <div className="border-(--semi-color-border) px-4 py-1.5 whitespace-nowrap tabular-nums">
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.span
                 key={timeTotalKey}
                 className="inline-block"
