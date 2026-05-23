@@ -5,31 +5,47 @@
   "version": "0.2.0",
   "packageManager": "pnpm@10.29.3",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "vinext dev",
+    "build": "pnpm run build:cloudflare",
+    "start": "vinext start",
+    "check:vinext": "vinext check",
+    "build:cloudflare": "cross-env VINEXT_TARGET=cloudflare vinext build",
+    "deploy:cloudflare": "cross-env VINEXT_TARGET=cloudflare vinext deploy",
+    "build:vercel": "cross-env VINEXT_TARGET=vercel NITRO_PRESET=vercel vite build"
   },
   "dependencies": {
-    "@douyinfe/semi-icons": "^2.92.2",
-    "@douyinfe/semi-ui": "^2.92.2",
-    "@tailwindcss/postcss": "^4.2.0",
+    "@douyinfe/semi-icons": "^2.99.2",
+    "@douyinfe/semi-ui": "^2.99.2",
+    "@tailwindcss/postcss": "^4.3.0",
     "@types/node": "25.2.3",
-    "@types/react": "^19.2.14",
-    "motion": "^12.38.0",
-    "next": "^16.2.0",
-    "next-intl": "^4.8.3",
-    "postcss": "^8.5.6",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "react": "19",
-    "react-dom": "19",
-    "tailwindcss": "^4.2.0",
+    "@types/react": "^19.2.15",
+    "motion": "^12.40.0",
+    "next": "^16.2.6",
+    "next-intl": "^4.12.0",
+    "postcss": "^8.5.15",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.3.0",
     "typescript": "5.9.3",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "prettier": {
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.38.0",
+    "@tailwindcss/vite": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-rsc": "^0.5.26",
+    "cross-env": "^10.1.0",
+    "nitro": "3.0.260522-beta",
+    "react-server-dom-webpack": "^19.2.6",
+    "vinext": "^0.0.52",
+    "vite": "^8.0.14",
+    "wrangler": "^4.94.0"
   }
 }

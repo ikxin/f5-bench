@@ -1,5 +1,6 @@
 "use client";
 
+import "@douyinfe/semi-ui/react19-adapter";
 import {
   createContext,
   startTransition,

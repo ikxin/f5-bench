@@ -1,0 +1,2 @@
+patchedDependencies:
+  vinext@0.0.52: patches/vinext@0.0.52.patch

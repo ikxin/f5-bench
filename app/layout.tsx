@@ -1,4 +1,3 @@
-import "@douyinfe/semi-ui/react19-adapter";
 import Script from "next/script";
 import "./app.css";
 

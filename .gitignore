@@ -36,6 +36,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# cloudflare / nitro
+/.vinext/
+/.wrangler/
+/.output/
+/.playwright-mcp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/dist/

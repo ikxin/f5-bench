@@ -26,7 +26,7 @@
 
 ## ✨ 功能特性
 
-- 🚀 基于 [Next.js](https://nextjs.org/) 构建，静态导出，可部署到任意静态托管平台
+- 🚀 基于 [vinext](https://github.com/cloudflare/vinext) + Next.js App Router API 构建，支持 Cloudflare Workers 与 Vercel 部署
 - 🎨 使用 [Semi Design](https://semi.design/) 组件库 + [Tailwind CSS](https://tailwindcss.com/) 构建 UI
 - 🌍 支持 11 种语言的国际化（简体中文、繁体中文、English、日本語、한국어、Français、Deutsch、Español、Português、Русский、العربية）
 - 🌙 支持亮色/暗色主题切换
@@ -35,15 +35,16 @@
 
 ## 🛠️ 技术栈
 
-| 技术                                          | 说明                         |
-| --------------------------------------------- | ---------------------------- |
-| [Next.js](https://nextjs.org/)                | React 全栈框架               |
-| [React](https://react.dev/)                   | UI 构建库                    |
-| [TypeScript](https://www.typescriptlang.org/) | 类型安全的 JavaScript        |
-| [Tailwind CSS](https://tailwindcss.com/)      | 原子化 CSS 框架              |
-| [Semi Design](https://semi.design/)           | 企业级 UI 组件库             |
-| [next-intl](https://next-intl.dev/)           | Next.js 国际化方案           |
-| [pnpm](https://pnpm.io/)                      | 快速、节省磁盘空间的包管理器 |
+| 技术                                           | 说明                         |
+| ---------------------------------------------- | ---------------------------- |
+| [Next.js](https://nextjs.org/)                 | React 全栈框架               |
+| [vinext](https://github.com/cloudflare/vinext) | Next.js API 的 Vite 运行时   |
+| [React](https://react.dev/)                    | UI 构建库                    |
+| [TypeScript](https://www.typescriptlang.org/)  | 类型安全的 JavaScript        |
+| [Tailwind CSS](https://tailwindcss.com/)       | 原子化 CSS 框架              |
+| [Semi Design](https://semi.design/)            | 企业级 UI 组件库             |
+| [next-intl](https://next-intl.dev/)            | Next.js 国际化方案           |
+| [pnpm](https://pnpm.io/)                       | 快速、节省磁盘空间的包管理器 |
 
 ## 📝 免责声明
 
@@ -76,6 +77,26 @@ pnpm dev
 
 # 构建生产版本
 pnpm build
+```
+
+### Cloudflare Workers
+
+```bash
+# 构建 Workers 产物
+pnpm run build:cloudflare
+
+# 部署到 Cloudflare Workers
+pnpm run deploy:cloudflare
+```
+
+首次部署前需要通过 `wrangler login` 登录，或在 CI 中配置 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID`。
+
+### Vercel
+
+仓库已包含 `vercel.json`，连接到 Vercel 后会使用 `pnpm run build:vercel` 构建，并输出到 `.vercel/output`。
+
+```bash
+pnpm run build:vercel
 ```
 
 ## 🤝 参与贡献
