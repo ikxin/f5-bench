@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-05-23
+
+### ⚠️ Breaking Changes
+
+- 项目构建运行时从 Next.js CLI 迁移至 vinext，默认构建目标切换为 Cloudflare Workers
+
+### ✨ New Features
+
+- 支持通过 vinext 部署到 Cloudflare Workers
+- 新增 Vercel 构建配置，可通过 Nitro 输出 Vercel 产物
+- 保留静态文件发布包，Release 压缩包改为使用 vinext 生成的 `dist/client` 产物
+
+### 🔧 Infrastructure
+
+- 新增 Vite、Cloudflare、Nitro、Wrangler 与 vinext 相关配置
+- 更新依赖版本以适配 Next.js 16.2、React 19.2 与 Tailwind CSS 4.3
+- 新增 vinext 兼容性补丁，修复 Windows 下静态文件路径分隔符问题
+
 ## [0.2.0] - 2026-03-15
 
 ### ⚠️ Breaking Changes

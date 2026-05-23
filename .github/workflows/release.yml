@@ -33,11 +33,11 @@ jobs:
 
       - name: Create archive
         run: |
-          cd out
+          cd dist/client
           zip -q -r ../f5-bench-${GITHUB_REF#refs/tags/}.zip .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
-          files: f5-bench-v*.zip
+          files: dist/f5-bench-v*.zip
