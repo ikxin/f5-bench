@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
+  "cleanUrls": true,
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist/client"
 }

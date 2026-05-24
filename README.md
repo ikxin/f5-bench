@@ -95,7 +95,7 @@ wrangler pages deploy dist/client --project-name=f5-bench
 
 ### Vercel
 
-仓库已包含 `vercel.json`，连接到 Vercel 后会使用 `pnpm run build` 构建，并将 `dist/client` 作为静态输出目录发布，不生成 Vercel Functions。
+仓库已包含 `vercel.json`，连接到 Vercel 后会使用 `pnpm run build` 构建，并将 `dist/client` 作为静态输出目录发布。`cleanUrls` 会让 `/zh-CN.html` 正常以 `/zh-CN` 访问，不生成 Vercel Functions。
 
 ```bash
 pnpm run build
