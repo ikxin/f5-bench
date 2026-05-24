@@ -6,12 +6,9 @@
   "packageManager": "pnpm@10.29.3",
   "scripts": {
     "dev": "vinext dev",
-    "build": "pnpm run build:cloudflare",
+    "build": "vinext build",
     "start": "vinext start",
-    "check:vinext": "vinext check",
-    "build:cloudflare": "cross-env VINEXT_TARGET=cloudflare vinext build",
-    "deploy:cloudflare": "cross-env VINEXT_TARGET=cloudflare vinext deploy",
-    "build:vercel": "cross-env VINEXT_TARGET=vercel NITRO_PRESET=vercel vite build"
+    "check": "vinext check"
   },
   "dependencies": {
     "@douyinfe/semi-icons": "^2.99.2",
@@ -41,8 +38,6 @@
     "@tailwindcss/vite": "^4.3.0",
     "@vitejs/plugin-react": "^6.0.2",
     "@vitejs/plugin-rsc": "^0.5.26",
-    "cross-env": "^10.1.0",
-    "nitro": "3.0.260522-beta",
     "react-server-dom-webpack": "^19.2.6",
     "vinext": "^0.0.52",
     "vite": "^8.0.14",

@@ -26,7 +26,7 @@
 
 ## ✨ 功能特性
 
-- 🚀 基于 [vinext](https://github.com/cloudflare/vinext) + Next.js App Router API 构建，支持 Cloudflare Workers 与 Vercel 部署
+- 🚀 基于 [vinext](https://github.com/cloudflare/vinext) + Next.js App Router API 构建，支持 Cloudflare Pages 与 Vercel 静态部署
 - 🎨 使用 [Semi Design](https://semi.design/) 组件库 + [Tailwind CSS](https://tailwindcss.com/) 构建 UI
 - 🌍 支持 11 种语言的国际化（简体中文、繁体中文、English、日本語、한국어、Français、Deutsch、Español、Português、Русский、العربية）
 - 🌙 支持亮色/暗色主题切换
@@ -79,24 +79,26 @@ pnpm dev
 pnpm build
 ```
 
-### Cloudflare Workers
+构建完成后，静态产物会输出到 `dist/client`，可部署到任意静态网站主机。
+
+### Cloudflare Pages
 
 ```bash
-# 构建 Workers 产物
-pnpm run build:cloudflare
+# 构建静态产物
+pnpm run build
 
-# 部署到 Cloudflare Workers
-pnpm run deploy:cloudflare
+# 部署到 Cloudflare Pages
+wrangler pages deploy dist/client --project-name=f5-bench
 ```
 
-首次部署前需要通过 `wrangler login` 登录，或在 CI 中配置 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID`。
+仓库已包含 `wrangler.jsonc`，Cloudflare Pages 构建输出目录配置为 `dist/client`。首次通过 Wrangler 部署前需要通过 `wrangler login` 登录，或在 CI 中配置 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID`。
 
 ### Vercel
 
-仓库已包含 `vercel.json`，连接到 Vercel 后会使用 `pnpm run build:vercel` 构建，并输出到 `.vercel/output`。
+仓库已包含 `vercel.json`，连接到 Vercel 后会使用 `pnpm run build` 构建，并将 `dist/client` 作为静态输出目录发布，不生成 Vercel Functions。
 
 ```bash
-pnpm run build:vercel
+pnpm run build
 ```
 
 ## 🤝 参与贡献
